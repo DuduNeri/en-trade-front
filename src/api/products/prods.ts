@@ -54,3 +54,13 @@ export async function removeToFavorites(productId: string) {
     throw error;
   }
 }
+
+export async function getFavorites(): Promise<Product[]> {
+  try {
+    const res = await api.get<Product[]>("/product/favorites");
+    return res.data;
+  } catch (error) {
+    console.error("Erro ao buscar favoritos:", error);
+    throw error;
+  }
+}

@@ -111,7 +111,7 @@ function getStockStatus(quantity: number) {
 }
 
 /* ---------- Página ---------- */
-export function Profile() {
+export function ProfileSeller() {
   const [user, setUser] = useState<GetUserInterface | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

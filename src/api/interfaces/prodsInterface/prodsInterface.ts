@@ -11,6 +11,12 @@ export interface Product {
   image?: string;
   images?: string[];
   is_active: boolean;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }
 
 export interface CreateProduct {

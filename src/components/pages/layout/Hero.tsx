@@ -5,6 +5,7 @@ import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import {
+    Avatar,
   Box,
   Button,
   Chip,
@@ -20,6 +21,7 @@ import {
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { Product } from "../../../api/interfaces/prodsInterface/prodsInterface";
 import { addFavorite, getAllProds, removeToFavorites } from "../../../api/products/prods";
+import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 
 const colors = {
   bg: "#090b12",
@@ -257,7 +259,57 @@ function ProductCard({
         >
           {prod.title}
         </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            mt: 1,
+            minWidth: 0,
+          }}
+        >
+          <Avatar
+            src={prod.user?.avatar || undefined}
+            alt={prod.user?.name}
+            sx={{
+              width: 24,
+              height: 24,
+              bgcolor: colors.surface,
+              border: `1px solid ${colors.border}`,
+              flexShrink: 0,
+            }}
+          >
+            <PersonOutlineRoundedIcon
+              sx={{ fontSize: 16, color: colors.textSecondary }}
+            />
+          </Avatar>
 
+          <Typography
+            component="p"
+            sx={{
+              fontSize: 13,
+              fontWeight: 500,  
+              lineHeight: 1.5,
+              color: colors.textSecondary,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              m: 0,
+            }}
+          >
+            Vendido por{" "}
+            <Box
+              component="span"
+              sx={{
+                color: colors.text,
+                fontWeight: 700,
+              }}
+            >
+              {prod.user?.name ?? "Vendedor desconhecido"}
+
+            </Box>
+          </Typography>
+        </Box>
         <Typography
           sx={{
             fontSize: 24,
@@ -437,7 +489,7 @@ export function Hero({ onAddToCart }: HeroProps) {
         next.add(productId);
         return next;
       });
-      console.log(res)
+      console.log("Adicionado aos favoritos, produto de: ",res.user.name)
       return res;
     } catch (error: any) {
       console.log("Erro ao adicionar aos favoritos")
@@ -452,7 +504,7 @@ export function Hero({ onAddToCart }: HeroProps) {
         next.delete(productId);
         return next;
       });
-      console.log(res)
+      console.log("Removido dos favoritos: ",res.data)
       return res;
     } catch (error: any) {
       console.log("Erro ao adicionar aos favoritos")

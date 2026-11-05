@@ -1,17 +1,20 @@
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Badge, Box, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 
 const NAV_LINKS = ["Início", "Vitrine", "Categorias", "Ofertas"];
 
+const iconButtonSx = (hover: string) => ({
+  color: "#8b93b8",
+  transition: "color 0.2s ease",
+  "&:hover": { color: hover },
+});
+
 export function Header() {
   const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/profile");
-  };
 
   return (
     <Box
@@ -117,25 +120,28 @@ export function Header() {
         ))}
       </Box>
 
-      {/* AÇÕES: busca, conta, carrinho */}
+      {/* AÇÕES: favoritos, conta, carrinho, configurações */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
         <IconButton
-          sx={{
-            color: "#8b93b8",
-            transition: "color 0.2s ease",
-            "&:hover": { color: "#00fff2" },
-          }}
-          onClick={() => handleClick()}
+          aria-label="Favoritos"
+          onClick={() => navigate("/favorites")}
+          sx={iconButtonSx("#ff2ec4")}
+        >
+          <FavoriteBorderIcon fontSize="small" />
+        </IconButton>
+
+        <IconButton
+          aria-label="Perfil"
+          onClick={() => navigate("/profile-seller")}
+          sx={iconButtonSx("#00fff2")}
         >
           <PersonOutlineRoundedIcon fontSize="small" />
         </IconButton>
 
         <IconButton
-          sx={{
-            color: "#8b93b8",
-            transition: "color 0.2s ease",
-            "&:hover": { color: "#ff2ec4" },
-          }}
+          aria-label="Carrinho"
+          // onClick={() => navigate("/cart")}
+          sx={iconButtonSx("#ff2ec4")}
         >
           <Badge
             badgeContent={3}
@@ -153,30 +159,14 @@ export function Header() {
             <ShoppingBagOutlinedIcon fontSize="small" />
           </Badge>
         </IconButton>
+
         <IconButton
-          sx={{
-            color: "#8b93b8",
-            transition: "color 0.2s ease",
-            "&:hover": { color: "#ff2ec4" },
-          }}
+          aria-label="Configurações"
+          // onClick={() => navigate("/settings")}
+          sx={iconButtonSx("#00fff2")}
         >
-          <Badge
-            badgeContent={3}
-            sx={{
-              "& .MuiBadge-badge": {
-                bgcolor: "#ff2ec4",
-                color: "#0a0d18",
-                fontWeight: 700,
-                fontSize: "0.65rem",
-                minWidth: 16,
-                height: 16,
-              },
-            }}
-          >
-            <SettingsSuggestIcon fontSize="small" />
-          </Badge>
+          <SettingsSuggestIcon fontSize="small" />
         </IconButton>
-        
       </Box>
     </Box>
   );
